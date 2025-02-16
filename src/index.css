@@ -1,0 +1,299 @@
+/* =============== Variables Globales =============== */
+:root {
+  --portal-green: #00ff88;
+  --portal-blue: #00f7ff;
+  --portal-red: #ff003c;
+  --portal-purple: #b535f6;
+  --citadel: #1a1a1a;
+  --dark-dimension: #1a1a1a;
+  --dimension-bg: #0a0a0a;
+  --rick-hair: #a8d64e;
+  --morty-shirt: #f4d442;
+}
+
+/* =============== Estilos Globales =============== */
+body {
+  background-color: var(--dark-dimension);
+  min-height: 100vh;
+  color: white;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* =============== Componente Navbar =============== */
+.rickmorty-nav {
+  background-color: var(--citadel) !important;
+  border-bottom: 2px solid var(--portal-green);
+  padding: 1rem 0;
+}
+
+.rickmorty-title {
+  font-family: 'Comic Sans MS', cursive;
+  color: var(--rick-hair) !important;
+  text-shadow: 0 0 10px var(--portal-green);
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.portal-link {
+  font-family: 'Bangers', cursive;
+  color: var(--portal-green) !important;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.portal-link:hover {
+  text-shadow: 0 0 15px var(--portal-green);
+}
+
+/* =============== Componente CharacterList =============== */
+.neon-card {
+  background: var(--citadel) !important;
+  border: 2px solid var(--portal-blue);
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 350px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.neon-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px var(--portal-blue);
+}
+
+.character-image {
+  border-radius: 15px 15px 0 0;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.portal-title {
+  color: var(--portal-green);
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+  font-family: 'Comic Sans MS', cursive;
+  margin: 1rem 0;
+}
+
+.info-label {
+  color: var(--portal-blue);
+  font-weight: 700;
+}
+
+.info-value {
+  color: var(--portal-green);
+  margin-left: 8px;
+}
+
+.status-badge {
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+  display: inline-block;
+  margin: 0.5rem 0;
+}
+
+.status-badge.alive {
+  background-color: rgba(0, 255, 136, 0.1);
+  border: 2px solid var(--portal-green);
+  color: var(--portal-green);
+}
+
+.status-badge.dead {
+  background-color: rgba(255, 0, 60, 0.1);
+  border: 2px solid var(--portal-red);
+  color: var(--portal-red);
+}
+
+.status-badge.unknown {
+  background-color: rgba(181, 53, 246, 0.1);
+  border: 2px solid var(--portal-purple);
+  color: var(--portal-purple);
+}
+
+.favorite-icon {
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+  color: var(--portal-red);
+}
+
+.favorite-icon:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 5px var(--portal-red));
+}
+
+/* =============== Componente SearchAndFilter =============== */
+.search-input {
+  background-color: rgba(43, 43, 43, 0.8) !important;
+  border: 1px solid var(--portal-blue) !important;
+  color: white !important;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.search-input:focus {
+  box-shadow: 0 0 15px rgba(0, 225, 255, 0.3) !important;
+  border-color: var(--portal-green) !important;
+}
+
+.dropdown-toggle-custom {
+  background-color: var(--citadel) !important;
+  border: 1px solid var(--portal-blue) !important;
+  color: var(--portal-green) !important;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+/* =============== Componente Pagination =============== */
+.portal-pagination-container {
+  margin: 3rem 0;
+  text-align: center;
+}
+
+.multiverse-navigator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+}
+
+.portal-nav-button {
+  background: linear-gradient(45deg, var(--portal-blue), var(--portal-green));
+  border: 2px solid var(--portal-green);
+  border-radius: 15px;
+  padding: 1rem 2rem;
+  color: white;
+  font-family: 'Bangers', cursive;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.portal-nav-button:disabled {
+  opacity: 0.3;
+  filter: grayscale(0.8);
+  cursor: not-allowed;
+}
+
+.portal-nav-button:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(0, 255, 157, 0.5);
+}
+
+.dimension-counter {
+  color: var(--portal-blue);
+  font-family: 'Roboto Condensed', sans-serif;
+  margin-top: 1rem;
+}
+
+/* =============== Componente FavoritesPage =============== */
+.favorites-dimension {
+  background: linear-gradient(45deg, #1a1a1a, #003300);
+  border: 2px solid #00ff88;
+  padding: 2rem;
+  border-radius: 15px;
+  margin: 2rem 0;
+}
+
+/* =============== Componente CharacterDetail =============== */
+.character-dimension {
+  background: var(--dimension-bg);
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
+.portal-card {
+  background: rgba(26, 26, 26, 0.8);
+  border: 3px solid var(--portal-green);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 0 40px rgba(0, 255, 136, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.portal-image {
+  border: 4px solid var(--portal-green);
+  border-radius: 15px;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.portal-info-card {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 1.5rem;
+  border-radius: 15px;
+  border: 2px solid var(--portal-blue);
+  margin-bottom: 1.5rem;
+}
+
+.portal-info-text {
+  color: #e5e7eb;
+  font-size: 1.1rem;
+  margin-bottom: 0;
+}
+
+.portal-episodes {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+  padding: 1.8rem;
+  margin-top: 2.5rem;
+  border: 2px solid var(--portal-purple);
+}
+
+.episode-card {
+  background: rgba(10, 10, 10, 0.6);
+  padding: 1.2rem;
+  border-radius: 10px;
+  border: 1px solid var(--portal-purple);
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.episode-card:hover {
+  transform: translateX(5px);
+  box-shadow: 0 0 15px rgba(181, 53, 246, 0.4);
+}
+
+.episode-number {
+  color: var(--portal-purple);
+  font-size: 0.9rem;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.episode-title {
+  color: #e5e7eb;
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+/* =============== Responsive Design =============== */
+@media (max-width: 768px) {
+  .portal-card {
+    padding: 1.5rem;
+  }
+
+  .portal-info-card {
+    padding: 1rem;
+  }
+
+  .portal-episodes {
+    padding: 1.5rem;
+  }
+
+  .episode-card {
+    padding: 1rem;
+  }
+}
