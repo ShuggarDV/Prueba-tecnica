@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Spinner, Container, Row, Col, Button, Alert } from 'react-bootstrap';
+import { Container,Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
+
 
 interface CharacterDetails {
     id: number;
@@ -26,7 +27,6 @@ const CharacterDetail = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const [character, setCharacter] = useState<CharacterDetails | null>(null);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [episodes, setEpisodes] = useState<string[]>([]);
 
@@ -49,20 +49,11 @@ const CharacterDetail = () => {
 
             } catch (err) {
                 setError(`Error dimensional: ${(err as Error).message}`);
-            } finally {
-                setLoading(false);
-            }
+            } 
         };
 
         fetchData();
     }, [id]);
-
-    if (loading) return (
-        <Container className="text-center my-5 portal-loading">
-            <Spinner animation="border" variant="primary" className="portal-spinner" />
-            <h3 className="mt-3 text-portal">Escaneando dimensión...</h3>
-        </Container>
-    );
 
     if (error) return (
         <Container className="my-5">
@@ -75,7 +66,7 @@ const CharacterDetail = () => {
                         <Button 
                             variant="portal" 
                             onClick={() => navigate('/')}
-                            className="mt-2"
+                            className="mt-2 btn-portal"
                         >
                             Reiniciar Portal
                         </Button>
@@ -96,7 +87,7 @@ const CharacterDetail = () => {
                         <Button 
                             variant="portal" 
                             onClick={() => navigate('/')}
-                            className="mt-2"
+                            className="mt-2 btn-portal"
                         >
                             Volver al Multiverso
                         </Button>
@@ -107,81 +98,70 @@ const CharacterDetail = () => {
     );
 
     return (
-        <Container className="character-dimension py-5">
-            <Button 
-                variant="outline-portal" 
-                onClick={() => navigate(-1)}
-                className="mb-4"
-            >
-                ← Retroceso Dimensional
-            </Button>
+        <div className="character-dimension py-5">
+            <Container>
+                <Button 
+                    variant="outline-portal" 
+                    onClick={() => navigate(-1)}
+                    className="mb-4 btn-portal"
+                >
+                    ← RETROCESO DIMENSIONAL
+                </Button>
 
-            <Row className="g-4 portal-card">
-                <Col md={5} className="portal-image-container">
-                    <div className="position-relative">
-                        <img
-                            src={character.image}
-                            alt={character.name}
-                            className="img-fluid portal-image rounded-4"
-                            loading="lazy"
-                        />
-                        <div className="portal-frame"></div>
-                    </div>
-                </Col>
-
-                <Col md={7}>
-                    <div className="portal-info">
-                        <h1 className="display-5 mb-3 text-portal">
-                            {character.name}
-                        </h1>
-                        
-                        <div className={`status-indicator ${character.status.toLowerCase()} mb-3`}>
-                            <span className="status-dot"></span>
-                            <span className="ms-2">
-                                {character.status} - {character.species}
-                            </span>
+                <div className="character-card">
+                    <div className="character-header">
+                        <div className="portal-image-container">
+                            <img
+                                src={character.image}
+                                alt={character.name}
+                                className="portal-image"
+                                loading="lazy"
+                            />
+                            <div className="portal-frame"></div>
                         </div>
-
-                        <Row className="g-3 mb-4">
-                            <Col md={6}>
-                                <div className="portal-info-card p-3">
-                                    <h3 className="text-portal-secondary mb-2">Género</h3>
-                                    <p className="portal-info-text">{character.gender}</p>
-                                </div>
-                            </Col>
-                            <Col md={6}>
-                                <div className="portal-info-card p-3">
-                                    <h3 className="text-portal-secondary mb-2">Origen</h3>
-                                    <p className="portal-info-text">{character.origin.name}</p>
-                                </div>
-                            </Col>
-                            <Col md={12}>
-                                <div className="portal-info-card p-3">
-                                    <h3 className="text-portal-secondary mb-2">Ubicación Actual</h3>
-                                    <p className="portal-info-text">{character.location.name}</p>
-                                </div>
-                            </Col>
-                        </Row>
-
-                        {episodes.length > 0 && (
-                            <div className="portal-episodes p-3">
-                                <h2 className="mb-3 text-portal">Últimas Travesías</h2>
-                                <Row className="g-2">
-                                    {episodes.map((episode, index) => (
-                                        <Col key={index} md={6}>
-                                            <div className="episode-card p-2">
-                                                <span className="episode-number">Episodio {index + 1}</span>
-                                                <p className="episode-title">{episode}</p>
-                                            </div>
-                                        </Col>
-                                    ))}
-                                </Row>
+                        
+                        <div className="character-title">
+                            <h1 className="neon-title">{character.name}</h1>
+                            <div className={`status-indicator ${character.status}`}>
+                                <span className="status-dot"></span>
+                                <span>{character.status} - {character.species}</span>
                             </div>
-                        )}
+                        </div>
                     </div>
-                </Col>
-            </Row>
-        </Container>
+                    
+                    <div className="character-info-grid">
+                        <div className="portal-info-card">
+                            <h2 className="info-title neon-text">GÉNERO</h2>
+                            <p className="info-content">{character.gender}</p>
+                        </div>
+                        
+                        <div className="portal-info-card">
+                            <h2 className="info-title neon-text">ORIGEN</h2>
+                            <p className="info-content">{character.origin.name}</p>
+                        </div>
+                        
+                        <div className="portal-info-card full-width">
+                            <h2 className="info-title neon-text">UBICACIÓN ACTUAL</h2>
+                            <p className="info-content">{character.location.name}</p>
+                        </div>
+                    </div>
+                    
+                    {episodes.length > 0 && (
+                        <div className="character-episodes">
+                            <h2 className="episodes-title neon-title">ÚLTIMAS TRAVESÍAS</h2>
+                            <div className="episodes-grid">
+                                {episodes.map((episode, index) => (
+                                    <div className="episode-card" key={index}>
+                                        <p className="episode-number">Episodio {index + 1}</p>
+                                        <p className="episode-title">{episode}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </Container>
+        </div>
     );
 };
 

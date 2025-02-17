@@ -8,7 +8,20 @@ export interface Character {
   name: string;
   status: string;
   species: string;
+  type: string;
+  gender: string;
+  origin: {
+    name: string;
+    url: string;
+  };
+  location: {
+    name: string;
+    url: string;
+  };
   image: string;
+  episode: string[];
+  url: string;
+  created: string;
 }
 
 interface Info {
@@ -18,16 +31,24 @@ interface Info {
   prev: string | null;
 }
 
+interface Filters {
+  name: string;
+  status: string;
+  species: string;
+  type: string;
+  gender: string;
+  origin: string;
+  location: string;
+}
+
 interface CharactersState {
   items: Character[];
   info: Info;
   currentPage: number;
   loading: boolean;
   error: string | null;
-  filters: {
-    name: string;
-    status: string;
-  };
+  filters: Filters;
+  activeFilters: string[];
   favorites: number[];
 }
 
@@ -39,30 +60,41 @@ const initialState: CharactersState = {
   error: null,
   filters: {
     name: '',
-    status: ''
+    status: '',
+    species: '',
+    type: '',
+    gender: '',
+    origin: '',
+    location: ''
   },
+  activeFilters: [],
   favorites: JSON.parse(localStorage.getItem('favorites') || '[]'),
 };
 
 export const fetchCharacters = createAsyncThunk(
   'characters/fetchCharacters',
-  async (page: number, { getState, rejectWithValue }) => {
+  async ({ page, filterKey }: { page: number, filterKey?: string }, { getState, rejectWithValue }) => {
     try {
       const state = getState() as RootState;
-      const { filters } = state.characters;
+      const { filters, activeFilters } = state.characters;
 
-      // Simular retraso solo en desarrollo
-      if (process.env.NODE_ENV === 'development') {
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+     
+      const params: Record<string, any> = { page };
+
+      if (filterKey && filters[filterKey as keyof Filters]) {
+        params[filterKey] = filters[filterKey as keyof Filters];
+      } else {
+        activeFilters.forEach(key => {
+          if (filters[key as keyof Filters]) {
+            params[key] = filters[key as keyof Filters];
+          }
+        });
       }
 
-      const response = await axios.get('https://rickandmortyapi.com/api/character', {
-        params: {
-          page,
-          name: filters.name,
-          status: filters.status
-        }
-      });
+      // Simulación de espera (2 segundos)
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      const response = await axios.get('https://rickandmortyapi.com/api/character', { params });
 
       return {
         info: response.data.info,
@@ -70,24 +102,37 @@ export const fetchCharacters = createAsyncThunk(
         page
       };
     } catch (error: any) {
-      toast.error(`Error al cargar los personajes: ${error.message}`);
+      if (error.response && error.response.status === 404) {
+        return rejectWithValue('No se encontraron personajes con esos filtros');
+      }
       return rejectWithValue(error.message);
     }
   }
 );
 
+
 const charactersSlice = createSlice({
   name: 'characters',
   initialState,
   reducers: {
-    setFilters: (state, action: PayloadAction<{ name?: string; status?: string }>) => {
-      state.filters = {
-        ...state.filters,
-        ...action.payload
-      };
+    setFilter: (state, action: PayloadAction<{ key: keyof Filters; value: string }>) => {
+      const { key, value } = action.payload;
+      state.filters[key] = value;
+      
+      
+      if (value && !state.activeFilters.includes(key)) {
+        state.activeFilters.push(key);
+      } else if (!value) {
+        state.activeFilters = state.activeFilters.filter(k => k !== key);
+      }
+      
+      
+      state.currentPage = 1;
     },
     resetFilters: (state) => {
       state.filters = initialState.filters;
+      state.activeFilters = [];
+      state.currentPage = 1;
     },
     toggleFavorite: (state, action: PayloadAction<{ id: number; name: string }>) => {
       const { id, name } = action.payload;
@@ -123,6 +168,7 @@ const charactersSlice = createSlice({
   }
 });
 
-export const { setFilters, resetFilters, toggleFavorite } = charactersSlice.actions;
+export const { setFilter, resetFilters, toggleFavorite } = charactersSlice.actions;
 export const selectCharacters = (state: RootState) => state.characters;
+
 export default charactersSlice.reducer;
