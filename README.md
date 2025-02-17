@@ -1,54 +1,97 @@
-<<<<<<< HEAD
-# Prueba-tecnica
-=======
-# React + TypeScript + Vite
+# 🛠️ Cómo correr el proyecto
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Requisitos previos
 
-Currently, two official plugins are available:
+Node.js v16 o superior
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+npm v8 o superior
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Pasos para ejecutar el proyecto
 
-- Configure the top-level `parserOptions` property like this:
+1. **Clona el repositorio**
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+  - git clone
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. **Instala las dependencias**
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+  - npm install
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
->>>>>>> master
+3. **Inicia el servidor de desarrollo**
+
+ - npm run dev
+
+4. **Abre tu navegador**
+
+
+# 🌐 API utilizada
+
+Este proyecto consume la API pública de Rick and Morty, que proporciona información detallada sobre los personajes de la serie.
+
+Documentación oficial: https://rickandmortyapi.com/documentation
+
+Endpoint principal: https://rickandmortyapi.com/api/character
+
+## Características de la API:
+- Paginación: Permite navegar a través de múltiples páginas de resultados.
+
+- Filtros: Soporta búsqueda por nombre, estado, especie y más.
+
+- Datos completos: Incluye información detallada de cada personaje (imagen, origen, episodios, etc.).
+
+
+# ✨ Mejoras adicionales implementadas
+
+1. **Sistema de Favoritos**
+
+- Los usuarios pueden marcar personajes como favoritos.
+
+- Los favoritos se almacenan en localStorage para persistencia.
+
+- Sección especial para ver todos los personajes favoritos.
+
+2. **Paginación temática**
+   
+- Botones de navegación con diseño.
+
+- Animaciones fluidas.
+
+- Contador de páginas con estilo.
+
+3. **Loader animado**
+   
+- Animación de portal.
+
+- Timer mínimo de 2 segundos para asegurar que el loader sea visible.
+
+- Texto dinámico mientras se cargan los datos.
+
+4. **Diseño responsive**
+   
+- Interfaz optimizada para móviles, tablets y desktop.
+
+- Menú de navegación adaptable.
+
+- Tarjetas de personajes con diseño flexible.
+
+5. **Búsqueda y filtros avanzados**
+   
+- Búsqueda en tiempo real.
+
+- Filtros por estado (Vivo, Muerto, Desconocido).
+
+- Integración con la API para filtros del lado del servidor.
+
+6.**Modo oscuro**
+
+- Tema oscuro predeterminado con colores.
+
+- Efectos de brillo y sombras para una experiencia inmersiva.
+
+7.**Animaciones y transiciones**
+   
+- Efectos tarjetas.
+
+- Transiciones suaves.
+
+- Animaciones de portal al cambiar de página.
